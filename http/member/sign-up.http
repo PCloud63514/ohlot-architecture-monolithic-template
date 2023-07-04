@@ -1,0 +1,11 @@
+### 회원가입
+
+POST {{host}}/{{prefix}}/members/signup
+Content-Type: application/json
+Accept: application/json
+
+{
+    "nickname" : "PCloud"
+}
+
+
