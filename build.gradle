@@ -1,12 +1,13 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.6'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version '2.7.3'
+    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
     id 'java'
 }
+group = 'pcloud'
+version = null
+sourceCompatibility = '17'
 
-group = 'org.pcloud'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+jar { enabled = false }
 
 configurations {
     compileOnly {
@@ -15,14 +16,27 @@ configurations {
 }
 
 repositories {
+    maven { url 'https://jitpack.io' }
     mavenCentral()
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-mustache'
+    // mapper
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //h2 - local running
+    runtimeOnly 'com.h2database:h2'
+    testRuntimeOnly 'com.h2database:h2'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
