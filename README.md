@@ -12,32 +12,22 @@ Ohlot 프로젝트는 템플릿에 기능을 확장 후 새로운 템플릿으�
 - 이해할 수 있는 네이밍 컨벤션을 지키고자 합니다.
 
 
+## :paper: Spec
 
-## 🎩상위 템플릿
-- Root Template 입니다.
+| Name | Desc                                                                                                              |
+|:---|:------------------------------------------------------------------------------------------------------------------|
+| 상위 템플릿 | -                                                                                                                 |
+| Framework | <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">  |
+| Language | <img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white">                |
+| Architecture | <img src="https://img.shields.io/badge/Monolihic-3178C6?style=for-the-badge&logo=java&logoColor=white">           |
 
-## 🔖 주제
+## Build Guide
 
-조회(publicId 기준)
-닉네임, 상태창 수정 (credential)
-
-### 🗼중점 도메인
-
-### 🤹 기술
-
-## :running: 실행 방법
-
-### :ant: 단위 테스트
+### Unit Test
 
 ```shell
 ./gradlew test
 ```
 
-### http client 테스트
-> Intellij 에서 지원하는 Http Client 기능을 활용한 요청 테스트.
-
-<img width="383" alt="스크린샷 2023-07-04 오후 3 53 17" src="https://github.com/ranadas/sboot-jwt/assets/22608825/20e9ade8-3dcd-43a7-bb7d-d50556c5b6c0">
-
-
-### h2 console
-- [h2 console](http://localhost:8080/h2-console)
+### HTTP Client Test (Intellij)
+<img width="383" src="https://github.com/ranadas/sboot-jwt/assets/22608825/20e9ade8-3dcd-43a7-bb7d-d50556c5b6c0">
