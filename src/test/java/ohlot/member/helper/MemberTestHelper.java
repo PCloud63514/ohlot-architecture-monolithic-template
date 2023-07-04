@@ -2,6 +2,7 @@ package ohlot.member.helper;
 
 import ohlot.member.app.MemberSignUpRequest;
 import ohlot.member.domain.Member;
+import ohlot.member.domain.MemberPublicId;
 import ohlot.member.domain.MemberRepository;
 import ohlot.member.domain.MemberSecureId;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +25,7 @@ public class MemberTestHelper {
     @BeforeEach
     void setUp() {
         Mockito.lenient().when(mockMemberRepository.obtainSecureId()).thenReturn(new MemberSecureId(UUID.randomUUID().toString()));
+        Mockito.lenient().when(mockMemberRepository.obtainPublicId()).thenReturn(new MemberPublicId(UUID.randomUUID().toString()));
     }
 
 

@@ -1,5 +1,6 @@
 package ohlot.member.app;
 
+import ohlot.member.domain.MemberPublicId;
 import ohlot.member.domain.MemberSecureId;
 import ohlot.member.helper.MemberTestHelper;
 import org.junit.jupiter.api.DisplayName;
@@ -28,12 +29,24 @@ class MemberSignUpServiceTest extends MemberTestHelper {
         verify(mockMemberRepository, times(1)).obtainSecureId();
     }
 
+    @DisplayName("회원가입에 필요한 아이디(조회용)를 흭득합니다.")
+    @Test
+    void signUp_call_obtainPublicId_to_repository() {
+        final MemberSignUpRequest givenRequest = anMemberSignUpRequest().build();
+
+        memberSignUpService.signUp(givenRequest);
+
+        verify(mockMemberRepository, times(1)).obtainPublicId();
+    }
+
     @DisplayName("회원 정보를 저장합니다.")
     @Test
     void signUp_passes_member_to_repository() {
         final MemberSignUpRequest givenRequest = anMemberSignUpRequest().build();
         final MemberSecureId givenSecureId = new MemberSecureId("givenSecureId");
+        final MemberPublicId givenPublicId = new MemberPublicId("givenPublicId");
         BDDMockito.given(mockMemberRepository.obtainSecureId()).willReturn(givenSecureId);
+        BDDMockito.given(mockMemberRepository.obtainPublicId()).willReturn(givenPublicId);
 
         memberSignUpService.signUp(givenRequest);
 
@@ -41,5 +54,6 @@ class MemberSignUpServiceTest extends MemberTestHelper {
         assertThat(memberCaptor.getValue()).isNotNull();
         assertThat(memberCaptor.getValue().getNickname().value()).isEqualTo(givenRequest.getNickname());
         assertThat(memberCaptor.getValue().getSecureId()).isEqualTo(givenSecureId);
+        assertThat(memberCaptor.getValue().getPublicId()).isEqualTo(givenPublicId);
     }
 }

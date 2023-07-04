@@ -6,21 +6,27 @@ import lombok.Getter;
 @Getter
 public class Member {
     private final MemberSecureId secureId;
+    private final MemberPublicId publicId;
     private MemberNickname nickname;
     private MemberStateMessage stateMessage;
 
     @Builder
-    private Member(final MemberSecureId secureId, final MemberNickname nickname, final MemberStateMessage stateMessage) {
-        if (null == secureId || null == nickname || null == stateMessage) throw new InvalidMemberFormatException();
+    private Member(final MemberSecureId secureId, final MemberPublicId publicId, final MemberNickname nickname, final MemberStateMessage stateMessage) {
+        if (null == secureId || null == publicId) throw new InvalidMemberFormatException();
+        if (null == nickname || null == stateMessage) throw new InvalidMemberFormatException();
         this.secureId = secureId;
+        this.publicId = publicId;
         this.nickname = nickname;
         this.stateMessage = stateMessage;
     }
 
-    public static Member generateSignUpInstance(final MemberSecureId memberSecureId, final String nickname) {
+    public static Member generateSignUpInstance(final MemberSecureId memberSecureId,
+                                                final MemberPublicId memberPublicId,
+                                                final String nickname) {
         final MemberNickname memberNickname = new MemberNickname(nickname);
         return builder()
                 .secureId(memberSecureId)
+                .publicId(memberPublicId)
                 .nickname(memberNickname)
                 .stateMessage(new MemberStateMessage(""))
                 .build();

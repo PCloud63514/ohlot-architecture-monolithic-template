@@ -1,10 +1,7 @@
 package ohlot.member.infra;
 
 import lombok.*;
-import ohlot.member.domain.Member;
-import ohlot.member.domain.MemberNickname;
-import ohlot.member.domain.MemberSecureId;
-import ohlot.member.domain.MemberStateMessage;
+import ohlot.member.domain.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,6 +25,9 @@ class MemberEntity {
     @Convert(converter = MemberSecureIdConverter.class)
     @Column(name = "secure_id", nullable = false, unique = true)
     private MemberSecureId secureId;
+    @Convert(converter = MemberPublicIdConverter.class)
+    @Column(name = "public_id", nullable = false, unique = true)
+    private MemberPublicId publicId;
     @Convert(converter = MemberNicknameConverter.class)
     @Column(name = "nickname", nullable = false)
     private MemberNickname nickname;
@@ -44,6 +44,7 @@ class MemberEntity {
     public static MemberEntity mapped(final Member member) {
         return builder()
                 .secureId(member.getSecureId())
+                .publicId(member.getPublicId())
                 .nickname(member.getNickname())
                 .stateMessage(member.getStateMessage())
                 .build();
@@ -52,6 +53,7 @@ class MemberEntity {
     public Member toMember() {
         return Member.builder()
                 .secureId(this.secureId)
+                .publicId(this.publicId)
                 .nickname(this.nickname)
                 .stateMessage(this.stateMessage)
                 .build();
