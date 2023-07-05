@@ -16,8 +16,9 @@ public interface MemberRepository {
      */
     MemberPublicId obtainPublicId();
 
-    Optional<Member> findBy(final MemberPublicId publicId)
-            ;
+    Optional<Member> findBy(final MemberPublicId publicId);
+    Optional<Member> findBy(final MemberSecureId secureId);
+
     Page<Member> findAllByNicknameContains(final String query, Integer display, Integer start);
 
     void save(final Member member);

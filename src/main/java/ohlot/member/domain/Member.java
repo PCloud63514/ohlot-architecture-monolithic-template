@@ -32,11 +32,8 @@ public class Member {
                 .build();
     }
 
-    public void changeNickname(final String _nickname) {
+    public void changeInfo(final String _nickname, final String _stateMessage) {
         this.nickname = new MemberNickname(_nickname);
-    }
-
-    public void changeStateMessage(final String _memberStatMessage) {
-        this.stateMessage = new MemberStateMessage(_memberStatMessage);
+        this.stateMessage = new MemberStateMessage(_stateMessage);
     }
 }

@@ -1,6 +1,5 @@
 package ohlot.member.app;
 
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class MemberSignUpRequest {
+public class MemberUpdateRequest {
     private String nickname;
+    private String stateMessage;
 }

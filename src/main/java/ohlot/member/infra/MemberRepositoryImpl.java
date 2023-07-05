@@ -38,6 +38,12 @@ class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
+    public Optional<Member> findBy(final MemberSecureId secureId) {
+        return memberJpaRepository.findBySecureId(secureId)
+                .map(MemberEntity::toMember);
+    }
+
+    @Override
     public Page<Member> findAllByNicknameContains(final String query, Integer display, Integer start) {
         final String str = StringUtils.hasText(query) ? query : "";
         final MemberNickname memberNickname = new MemberNickname("%" + str + "%");
