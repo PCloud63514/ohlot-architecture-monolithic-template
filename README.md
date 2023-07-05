@@ -12,14 +12,14 @@ Ohlot 프로젝트는 템플릿에 기능을 확장 후 새로운 템플릿으�
 - 이해할 수 있는 네이밍 컨벤션을 지키고자 합니다.
 
 
-## :paper: Spec
+## 📄 Spec
 
-| Name | Desc                                                                                                              |
-|:---|:------------------------------------------------------------------------------------------------------------------|
-| 상위 템플릿 | -                                                                                                                 |
-| Framework | <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">  |
-| Language | <img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white">                |
-| Architecture | <img src="https://img.shields.io/badge/Monolihic-3178C6?style=for-the-badge&logo=java&logoColor=white">           |
+| Name | Desc                                                                                                                                                                                                             |
+|:---|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 상위 템플릿 | -                                                                                                                                                                                                                |
+| Framework | <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white">                                                                                                 |
+| Language | <img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white">                                                                                                               |
+| Architecture | <img src="https://img.shields.io/badge/Monolihic-3178C6?style=for-the-badge&logo=java&logoColor=white"> |
 
 ## Build Guide
 

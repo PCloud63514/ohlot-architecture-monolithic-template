@@ -1,12 +1,28 @@
 package ohlot.member.infra;
 
-import lombok.*;
-import ohlot.member.domain.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import ohlot.member.domain.Member;
+import ohlot.member.domain.MemberNickname;
+import ohlot.member.domain.MemberPublicId;
+import ohlot.member.domain.MemberSecureId;
+import ohlot.member.domain.MemberStateMessage;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Builder
@@ -14,7 +30,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "MEMBER", indexes = {
-        @Index(name = "IDX_MEMBER_SECURE_ID", columnList = "secure_id")
+        @Index(name = "IDX_MEMBER_SECURE_ID", columnList = "secure_id"),
+        @Index(name = "IDX_MEMBER_PUBLIC_ID", columnList = "public_id"),
 })
 @Entity
 @Getter
