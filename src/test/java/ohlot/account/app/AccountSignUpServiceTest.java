@@ -1,6 +1,7 @@
 package ohlot.account.app;
 
 import ohlot.account.domain.AccountRepository;
+import ohlot.account.domain.MemberCreationProcessor;
 import ohlot.account.domain.MemberLoginId;
 import ohlot.account.domain.MemberLoginIdExistsException;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +26,12 @@ class AccountSignUpServiceTest  {
     private AccountSignUpService accountSignUpService;
     @Mock
     private AccountRepository mockAccountRepository;
+    @Mock
+    private MemberCreationProcessor mockMemberCreationProcessor;
     @Captor
     private ArgumentCaptor<MemberLoginId> memberLoginIdCaptor;
+    @Captor
+    private ArgumentCaptor<String> nicknameCaptor;
 
     @DisplayName("로그인 아이디가 이미 존재하면 예외처리합니다.")
     @Test
@@ -44,5 +49,21 @@ class AccountSignUpServiceTest  {
 
         verify(mockAccountRepository, times(1)).isLoginIdExists(memberLoginIdCaptor.capture());
         assertThat(memberLoginIdCaptor.getValue()).isNotNull();
+    }
+
+    @DisplayName("회원 생성을 요청합니다.")
+    @Test
+    void signUpMemberAccount_call_creationMember() {
+        final MemberAccountSignUpRequest givenRequest = MemberAccountSignUpRequest.builder()
+                .loginId("givenLoginId")
+                .password("givenPassword")
+                .nickname("givenNickname")
+                .build();
+
+        accountSignUpService.signUpMemberAccount(givenRequest);
+
+        verify(mockMemberCreationProcessor, times(1)).createMember(nicknameCaptor.capture());
+        assertThat(nicknameCaptor.getValue()).isNotNull();
+        assertThat(nicknameCaptor.getValue()).isEqualTo(givenRequest.getNickname());
     }
 }
