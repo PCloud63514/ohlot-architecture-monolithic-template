@@ -3,6 +3,7 @@ package ohlot.account.app;
 
 import lombok.RequiredArgsConstructor;
 import ohlot.account.domain.AccountRepository;
+import ohlot.account.domain.MemberAccount;
 import ohlot.account.domain.MemberCreationProcessor;
 import ohlot.account.domain.MemberIdentityToken;
 import ohlot.account.domain.MemberLoginId;
@@ -20,6 +21,10 @@ public class AccountSignUpService {
         final MemberLoginId loginId = new MemberLoginId(request.getLoginId());
         final MemberPassword password = new MemberPassword(request.getPassword());
         if (accountRepository.isLoginIdExists(loginId)) throw new MemberLoginIdExistsException();
+
         final MemberIdentityToken identityToken = memberCreationProcessor.createMember(request.getNickname());
+        final MemberAccount memberAccount = new MemberAccount(identityToken, loginId, password);
+        accountRepository.save(memberAccount);
+
     }
 }

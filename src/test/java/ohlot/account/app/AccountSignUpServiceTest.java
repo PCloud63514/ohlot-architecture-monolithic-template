@@ -1,7 +1,9 @@
 package ohlot.account.app;
 
 import ohlot.account.domain.AccountRepository;
+import ohlot.account.domain.MemberAccount;
 import ohlot.account.domain.MemberCreationProcessor;
+import ohlot.account.domain.MemberIdentityToken;
 import ohlot.account.domain.MemberLoginId;
 import ohlot.account.domain.MemberLoginIdExistsException;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +34,8 @@ class AccountSignUpServiceTest  {
     private ArgumentCaptor<MemberLoginId> memberLoginIdCaptor;
     @Captor
     private ArgumentCaptor<String> nicknameCaptor;
+    @Captor
+    private ArgumentCaptor<MemberAccount> memberAccountCaptor;
 
     @DisplayName("로그인 아이디가 이미 존재하면 예외처리합니다.")
     @Test
@@ -59,11 +63,32 @@ class AccountSignUpServiceTest  {
                 .password("givenPassword")
                 .nickname("givenNickname")
                 .build();
+        BDDMockito.given(mockMemberCreationProcessor.createMember(any())).willReturn(new MemberIdentityToken("givenMemberIdentityToken"));
 
         accountSignUpService.signUpMemberAccount(givenRequest);
 
         verify(mockMemberCreationProcessor, times(1)).createMember(nicknameCaptor.capture());
         assertThat(nicknameCaptor.getValue()).isNotNull();
         assertThat(nicknameCaptor.getValue()).isEqualTo(givenRequest.getNickname());
+    }
+
+    @DisplayName("MemberAccount 정보를 저장합니다.")
+    @Test
+    void signUpMemberAccount_passes_account_to_repository() {
+        final MemberAccountSignUpRequest givenRequest = MemberAccountSignUpRequest.builder()
+                .loginId("givenLoginId")
+                .password("givenPassword")
+                .nickname("givenNickname")
+                .build();
+        MemberIdentityToken givenMemberIdentityToken = new MemberIdentityToken("givenMemberIdentityToken");
+        BDDMockito.given(mockMemberCreationProcessor.createMember(any())).willReturn(givenMemberIdentityToken);
+
+        accountSignUpService.signUpMemberAccount(givenRequest);
+
+        verify(mockAccountRepository, times(1)).save(memberAccountCaptor.capture());
+        assertThat(memberAccountCaptor.getValue()).isNotNull();
+        assertThat(memberAccountCaptor.getValue().getIdentityToken()).isEqualTo(givenMemberIdentityToken);
+        assertThat(memberAccountCaptor.getValue().getLoginId().value()).isEqualTo(givenRequest.getLoginId());
+        assertThat(memberAccountCaptor.getValue().getPassword().value()).isEqualTo(givenRequest.getPassword());
     }
 }
