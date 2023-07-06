@@ -15,7 +15,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -39,18 +38,14 @@ class MemberEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Convert(converter = MemberSecureIdConverter.class)
     @Column(name = "secure_id", nullable = false, unique = true)
-    private MemberSecureId secureId;
-    @Convert(converter = MemberPublicIdConverter.class)
+    private String secureId;
     @Column(name = "public_id", nullable = false, unique = true)
-    private MemberPublicId publicId;
-    @Convert(converter = MemberNicknameConverter.class)
+    private String publicId;
     @Column(name = "nickname", nullable = false)
-    private MemberNickname nickname;
-    @Convert(converter = MemberStateMessageConverter.class)
+    private String nickname;
     @Column(name = "state_message")
-    private MemberStateMessage stateMessage;
+    private String stateMessage;
     @CreatedDate
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -60,19 +55,19 @@ class MemberEntity {
 
     public static MemberEntity mapped(final Member member) {
         return builder()
-                .secureId(member.getSecureId())
-                .publicId(member.getPublicId())
-                .nickname(member.getNickname())
-                .stateMessage(member.getStateMessage())
+                .secureId(member.getSecureId().value())
+                .publicId(member.getPublicId().value())
+                .nickname(member.getNickname().value())
+                .stateMessage(member.getStateMessage().value())
                 .build();
     }
 
     public Member toMember() {
         return Member.builder()
-                .secureId(this.secureId)
-                .publicId(this.publicId)
-                .nickname(this.nickname)
-                .stateMessage(this.stateMessage)
+                .secureId(new MemberSecureId(this.secureId))
+                .publicId(new MemberPublicId(this.publicId))
+                .nickname(new MemberNickname(this.nickname))
+                .stateMessage(new MemberStateMessage(this.stateMessage))
                 .build();
     }
 }
