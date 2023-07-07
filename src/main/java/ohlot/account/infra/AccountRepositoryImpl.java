@@ -6,6 +6,8 @@ import ohlot.account.domain.MemberAccount;
 import ohlot.account.domain.MemberLoginId;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Component
 class AccountRepositoryImpl implements AccountRepository {
@@ -15,6 +17,11 @@ class AccountRepositoryImpl implements AccountRepository {
     public void save(final MemberAccount account) {
         final MemberAccountEntity entity = MemberAccountEntity.mapped(account);
         memberAccountEntityRepository.save(entity);
+    }
+
+    @Override
+    public Optional<MemberAccount> findBy(final MemberLoginId loginId) {
+        return Optional.empty();
     }
 
     @Override

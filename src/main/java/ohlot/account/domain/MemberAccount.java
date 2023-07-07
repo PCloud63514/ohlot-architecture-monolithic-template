@@ -16,4 +16,9 @@ public class MemberAccount {
         this.loginId = loginId;
         this.password = password;
     }
+
+    public MemberIdentityToken authenticate(final MemberPassword memberPassword) {
+        if (!this.password.equals(memberPassword)) throw new InvalidPasswordException();
+        return this.identityToken;
+    }
 }
