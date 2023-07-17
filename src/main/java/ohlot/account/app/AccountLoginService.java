@@ -2,10 +2,10 @@ package ohlot.account.app;
 
 import lombok.RequiredArgsConstructor;
 import ohlot.account.domain.AccountRepository;
-import ohlot.account.domain.MemberAccount;
-import ohlot.account.domain.MemberAccountNotFoundException;
-import ohlot.account.domain.MemberLoginId;
-import ohlot.account.domain.MemberPassword;
+import ohlot.account.domain.exception.AccountNotFoundException;
+import ohlot.account.domain.model.LoginAccount;
+import ohlot.account.domain.model.LoginId;
+import ohlot.account.domain.model.LoginPassword;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -14,9 +14,9 @@ public class AccountLoginService {
     private final AccountRepository accountRepository;
 
     public String loginMemberAccount(final MemberAccountLoginRequest request) {
-        final MemberLoginId loginId = new MemberLoginId(request.getLoginId());
-        final MemberPassword password = new MemberPassword(request.getPassword());
-        final MemberAccount memberAccount = accountRepository.findBy(loginId).orElseThrow(MemberAccountNotFoundException::new);
-        return memberAccount.authenticate(password).value();
+        final LoginId loginId = new LoginId(request.getLoginId());
+        final LoginPassword password = new LoginPassword(request.getPassword());
+        final LoginAccount loginAccount = accountRepository.findBy(loginId).orElseThrow(AccountNotFoundException::new);
+        return loginAccount.authenticate(password).value();
     }
 }
