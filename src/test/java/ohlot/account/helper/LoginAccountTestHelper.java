@@ -39,12 +39,13 @@ public abstract class LoginAccountTestHelper {
         Mockito.lenient().when(mockUserCreationProcessor.createUser(any())).thenReturn(new AccountUserSecureId("givenMemberIdentityToken"));
         Mockito.lenient().when(mockAccountRepository.isLoginIdExists(any())).thenReturn(false);
         Mockito.lenient().when(mockAccountRepository.findBy(any())).thenReturn(Optional.of(anMemberAccount().build()));
+        Mockito.lenient().when(mockAccountRepository.obtainSecureId()).thenReturn(new AccountSecureId("AccountSecureId"));
     }
 
     protected LoginAccount.LoginAccountBuilder anMemberAccount() {
         return LoginAccount.builder()
-                .secureId(new AccountSecureId("임시"))
-                .userSecureId(new AccountUserSecureId("givenIdentityToken"))
+                .secureId(new AccountSecureId("AccountSecureId"))
+                .userSecureId(new AccountUserSecureId("AccountUserSecureId"))
                 .loginId(new LoginId("givenLoginId"))
                 .password(new LoginPassword("givenPassword"));
     }

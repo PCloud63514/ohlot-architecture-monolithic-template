@@ -23,10 +23,9 @@ public class AccountSignUpService {
         final LoginPassword password = new LoginPassword(request.getPassword());
         if (accountRepository.isLoginIdExists(loginId)) throw new LoginIdExistsException();
 
-        final AccountSecureId secureId = new AccountSecureId("임시");
-        final AccountUserSecureId identityToken = userCreationProcessor.createUser(request.getNickname());
-        final LoginAccount loginAccount = new LoginAccount(secureId, identityToken, loginId, password);
+        final AccountUserSecureId accountUserSecureId = userCreationProcessor.createUser(request.getNickname());
+        final AccountSecureId secureId = accountRepository.obtainSecureId();
+        final LoginAccount loginAccount = new LoginAccount(secureId, accountUserSecureId, loginId, password);
         accountRepository.save(loginAccount);
-
     }
 }

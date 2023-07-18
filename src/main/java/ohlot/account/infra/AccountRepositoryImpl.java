@@ -2,11 +2,15 @@ package ohlot.account.infra;
 
 import lombok.RequiredArgsConstructor;
 import ohlot.account.domain.AccountRepository;
+import ohlot.account.domain.model.AccountSecureId;
 import ohlot.account.domain.model.LoginAccount;
 import ohlot.account.domain.model.LoginId;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Component
@@ -22,6 +26,11 @@ class AccountRepositoryImpl implements AccountRepository {
     @Override
     public Optional<LoginAccount> findBy(final LoginId loginId) {
         return Optional.empty();
+    }
+
+    @Override
+    public AccountSecureId obtainSecureId() {
+        return new AccountSecureId(Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8)));
     }
 
     @Override
